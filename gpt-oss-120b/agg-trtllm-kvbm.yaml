@@ -1,0 +1,128 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-dept-serving
+
+---
+apiVersion: nvidia.com/v1alpha1
+kind: DynamoGraphDeployment
+metadata:
+  name: gpt-oss-trtllm
+  namespace: ai-dept-serving
+  labels:
+    app.kubernetes.io/part-of: dynamo-agg-trtllm
+    benchmark.kvcache/stack: trtllm-agg-kvbm
+spec:
+  services:
+    frontend:
+      componentType: frontend
+      replicas: 1
+      envs:
+        - { name: DYN_ROUTER_MODE, value: kv }
+        - { name: DYN_KV_CACHE_BLOCK_SIZE, value: "32" }
+      resources:
+        requests: { cpu: "8", memory: 64Gi }
+        limits:   { cpu: "8", memory: 64Gi }
+      extraPodSpec:
+        volumes:
+          - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+        nodeName: hla9104p1-escn8-smt-hgx47
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/tensorrtllm-runtime:1.1.1
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          command: [python3, -m, dynamo.frontend]
+          args:
+            - --http-port
+            - "8000"
+            - --router-mode
+            - kv
+            - --model-path
+            - /mnt/models/hf/gpt-oss-120b
+            - --model-name
+            - openai/gpt-oss-120b
+
+    worker:
+      componentType: worker
+      replicas: 1
+      sharedMemory:
+        size: 80Gi
+      resources:
+        requests:
+          gpu: "8"
+          cpu: "64"
+          memory: 1792Gi
+          custom: { ephemeral-storage: 100Gi }
+        limits:
+          gpu: "8"
+          cpu: "64"
+          memory: 1792Gi
+      envs:
+        - { name: DYN_KVBM_CPU_CACHE_GB, value: "1536" }
+        - { name: DYN_KVBM_METRICS, value: "true" }
+        - { name: DYN_KVBM_TRTLLM_ZMQ_PORT, value: "20081" }
+
+        - { name: OMPI_MCA_pml, value: "ob1" }
+        - { name: OMPI_MCA_btl, value: "tcp,self,vader" }
+        - { name: OMPI_MCA_btl_base_warn_component_unused, value: "0" }
+        - { name: NCCL_IB_DISABLE, value: "0" }
+        - { name: NCCL_P2P_LEVEL, value: "NVL" }
+        - { name: NCCL_DEBUG, value: "ERROR" }
+        - { name: DYN_TRTLLM_SERVER_DISABLE_GC, value: "1" }
+        - { name: TRTLLM_ENABLE_PDL, value: "1" }
+      extraPodSpec:
+        nodeName: hla9104p1-escn8-smt-hgx47
+        volumes:
+          - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/tensorrtllm-runtime:1.1.1
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          workingDir: /workspace
+          command: [bash]
+          args:
+            - -c
+            - |
+              set -e
+
+              cat > /tmp/engine.yaml <<'EOF'
+              tensor_parallel_size: 8
+              moe_expert_parallel_size: 1
+
+              max_seq_len: 128000
+              max_num_tokens: 65536
+              max_batch_size: 512
+
+              enable_chunked_prefill: true
+              enable_attention_dp: false
+              trust_remote_code: true
+              backend: pytorch
+              disable_overlap_scheduler: false
+
+              cuda_graph_config:
+                enable_padding: true
+                max_batch_size: 256
+
+              kv_cache_config:
+                free_gpu_memory_fraction: 0.85
+                enable_partial_reuse: false
+                enable_block_reuse: true
+
+              kv_connector_config:
+                connector_module: kvbm.trtllm_integration.connector
+                connector_scheduler_class: DynamoKVBMConnectorLeader
+                connector_worker_class: DynamoKVBMConnectorWorker
+              EOF
+
+              uv pip install tensorrt_llm==1.3.0rc11
+
+              exec python3 -m dynamo.trtllm \
+                --model-path /mnt/models/hf/gpt-oss-120b \
+                --served-model-name openai/gpt-oss-120b \
+                --extra-engine-args /tmp/engine.yaml \
+                --dyn-reasoning-parser gpt_oss \
+                --dyn-tool-call-parser harmony \
+                --publish-events-and-metrics

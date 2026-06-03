@@ -1,0 +1,234 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-dept-serving
+
+---
+apiVersion: nvidia.com/v1alpha1
+kind: DynamoGraphDeployment
+metadata:
+  name: gpt-oss-trtllm
+  namespace: ai-dept-serving
+  labels:
+    app.kubernetes.io/part-of: dynamo-disagg-trtllm
+    benchmark.kvcache/stack: trtllm-disagg-native-nixl
+spec:
+  services:
+    frontend:
+      componentType: frontend
+      replicas: 1
+      envs:
+        - { name: DYN_ROUTER_MODE, value: kv }
+        - { name: DYN_KV_CACHE_BLOCK_SIZE, value: "32" }
+      resources:
+        requests: { cpu: "8", memory: 64Gi }
+        limits:   { cpu: "8", memory: 64Gi }
+      extraPodSpec:
+        volumes:
+          - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+        nodeName: hla9104p1-escn8-smt-hgx47
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/tensorrtllm-runtime:1.1.1
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          command: [python3, -m, dynamo.frontend]
+          args:
+            - --http-port
+            - "8000"
+            - --router-mode
+            - kv
+            - --model-path
+            - /mnt/models/hf/gpt-oss-120b
+            - --model-name
+            - openai/gpt-oss-120b
+
+    prefill:
+      componentType: worker
+      subComponentType: prefill
+      replicas: 1
+      sharedMemory:
+        size: 80Gi
+      resources:
+        requests:
+          gpu: "4"
+          cpu: "32"
+          memory: 1536Gi
+          custom: { ephemeral-storage: 100Gi, rdma/rdma_shared_devices_ib: "4" }
+        limits:
+          gpu: "4"
+          cpu: "32"
+          memory: 1536Gi
+          custom:
+            rdma/rdma_shared_devices_ib: "4"
+      envs:
+        # Transport selection - RDMA with GPU support
+        - { name: UCX_TLS, value: "rc_x,rc,dc_x,dc,cuda_copy,cuda_ipc" }
+        - { name: UCX_RNDV_SCHEME, value: "get_zcopy" }
+        - { name: UCX_RNDV_THRESH, value: "0" }
+        - { name: UCX_IB_REG_METHODS, value: "odp,rcache" }
+        - { name: UCX_IB_ADDR_TYPE, value: "eth" }
+        - { name: UCX_NET_DEVICES, value: "mlx5_0:1" }
+        - { name: UCX_IB_GID_INDEX, value: "0" }
+        - { name: NIXL_TELEMETRY_ENABLE, value: "y" }
+        - { name: RUST_LOG, value: "info,tower_http=off" }
+
+        # MPI intra-pod TP=4: ob1/tcp/vader, tránh UCX/IB trong pod
+        - { name: OMPI_MCA_pml,  value: "ob1" }
+        - { name: OMPI_MCA_btl,  value: "tcp,self,vader" }
+        - { name: OMPI_MCA_btl_base_warn_component_unused, value: "0" }
+
+        - { name: NCCL_IB_DISABLE,    value: "0" }
+        - { name: NCCL_P2P_LEVEL,     value: "NVL" }
+        - { name: NCCL_DEBUG,         value: "ERROR" }
+        # https://docs.nvidia.com/dynamo/backends/tensor-rt-llm/reference-guide#disabling-python-cyclic-gc-for-high-concurrency-benchmarks
+        - { name: DYN_TRTLLM_SERVER_DISABLE_GC, value: "1" }
+        - { name: TRTLLM_ENABLE_PDL, value: "1" }
+      extraPodSpec:
+        nodeName: hla9104p1-escn8-smt-hgx47
+        volumes:
+          - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/tensorrtllm-runtime:1.1.1
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          workingDir: /workspace
+          command: [bash]
+          args:
+            - -c
+            - |
+              set -e
+
+              cat > /tmp/prefill-engine.yaml <<'EOF'
+              tensor_parallel_size: 4
+              moe_expert_parallel_size: 1
+
+              # max_seq_len: 28672
+              max_seq_len: 128000
+              max_num_tokens: 65536
+              max_batch_size: 256
+              
+              enable_chunked_prefill: true
+
+              enable_attention_dp: false
+              trust_remote_code: true
+              disable_overlap_scheduler: true
+
+              cuda_graph_config:
+                enable_padding: true
+                max_batch_size: 256
+
+              kv_cache_config:
+                free_gpu_memory_fraction: 0.85
+                # host_cache_size: 137438953472 # 128 GiB
+                host_cache_size: 274877906944 # 256Gi
+                enable_block_reuse: true
+                enable_partial_reuse: true
+
+              cache_transceiver_config:
+                backend: DEFAULT
+                max_tokens_in_buffer: 32768
+              EOF
+
+              exec python3 -m dynamo.trtllm \
+                --model-path /mnt/models/hf/gpt-oss-120b \
+                --served-model-name openai/gpt-oss-120b \
+                --extra-engine-args /tmp/prefill-engine.yaml \
+                --dyn-reasoning-parser gpt_oss \
+                --dyn-tool-call-parser harmony \
+                --disaggregation-mode prefill \
+                --publish-events-and-metrics
+
+    decode:
+      componentType: worker
+      subComponentType: decode
+      replicas: 1
+      sharedMemory:
+        size: 80Gi
+      resources:
+        requests:
+          gpu: "4"
+          cpu: "32"
+          memory: 320Gi
+          custom: { ephemeral-storage: 100Gi, rdma/rdma_shared_devices_ib: "4" }
+        limits:
+          gpu: "4"
+          cpu: "32"
+          memory: 320Gi
+          custom:
+            rdma/rdma_shared_devices_ib: "4"
+      envs:
+        # Transport selection - RDMA with GPU support
+        - { name: UCX_TLS, value: "rc_x,rc,dc_x,dc,cuda_copy,cuda_ipc" }
+        - { name: UCX_RNDV_SCHEME, value: "get_zcopy" }
+        - { name: UCX_RNDV_THRESH, value: "0" }
+        - { name: UCX_IB_REG_METHODS, value: "odp,rcache" }
+        - { name: UCX_IB_ADDR_TYPE, value: "eth" }
+        - { name: UCX_NET_DEVICES, value: "mlx5_0:1" }
+        - { name: UCX_IB_GID_INDEX, value: "0" }
+        - { name: NIXL_TELEMETRY_ENABLE, value: "y" }
+        - { name: RUST_LOG, value: "info,tower_http=off" }
+
+        - { name: OMPI_MCA_pml,  value: "ob1" }
+        - { name: OMPI_MCA_btl,  value: "tcp,self,vader" }
+        - { name: OMPI_MCA_btl_base_warn_component_unused, value: "0" }
+        - { name: NCCL_IB_DISABLE, value: "0" }
+        - { name: NCCL_P2P_LEVEL,  value: "NVL" }
+        - { name: NCCL_DEBUG,      value: "ERROR" }
+        # https://docs.nvidia.com/dynamo/backends/tensor-rt-llm/reference-guide#disabling-python-cyclic-gc-for-high-concurrency-benchmarks
+        - { name: DYN_TRTLLM_SERVER_DISABLE_GC, value: "1" }
+      extraPodSpec:
+        nodeName: hla9104p1-escn8-smt-hgx47
+        volumes:
+          - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/tensorrtllm-runtime:1.1.1
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          workingDir: /workspace
+          command: [bash]
+          args:
+            - -c
+            - |
+              set -e
+
+              cat > /tmp/decode-engine.yaml <<'EOF'
+              tensor_parallel_size: 4
+              moe_tensor_parallel_size: 1
+
+              # max_seq_len: 28672
+              max_seq_len: 128000
+              max_batch_size: 512
+              max_num_tokens: 65536
+
+              enable_chuned_prefill: true
+
+              trust_remote_code: true
+              disable_overlap_scheduler: false
+              enable_attention_dp: false
+
+              cuda_graph_config:
+                enable_padding: true
+                max_batch_size: 256
+
+              kv_cache_config:
+                # dtype: fp8
+                free_gpu_memory_fraction: 0.85
+                enable_block_reuse: true
+
+              cache_transceiver_config:
+                backend: DEFAULT
+                max_tokens_in_buffer: 32768
+              EOF
+
+              exec python3 -m dynamo.trtllm \
+                --model-path /mnt/models/hf/gpt-oss-120b \
+                --served-model-name openai/gpt-oss-120b \
+                --extra-engine-args /tmp/decode-engine.yaml \
+                --dyn-reasoning-parser gpt_oss \
+                --dyn-tool-call-parser harmony \
+                --disaggregation-mode decode
