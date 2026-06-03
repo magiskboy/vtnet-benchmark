@@ -1840,10 +1840,10 @@ spec:
 
               echo "Finished: $(date -Iseconds)" | tee -a "${RUN_LOG}"
           env:
-            - { name: URL, value: "http://gpt-oss-trtllm-frontend:8000" }
+            - { name: URL, value: "http://gpt-oss-vllm-frontend:8000" }
             - { name: MODEL, value: "/mnt/models/hf/gpt-oss-120b" }
             - { name: SERVED_MODEL_NAME, value: "openai/gpt-oss-120b" }
-            - { name: BENCHMARK_STACK, value: "gpt-oss-trtllm" }
+            - { name: BENCHMARK_STACK, value: "gpt-oss-vllm" }
             - { name: REASONING_EFFORT, value: "low" }
             - { name: DISABLE_CONVERSATION_ID, value: "1" }
             - { name: NUM_CLIENTS, value: "40" }

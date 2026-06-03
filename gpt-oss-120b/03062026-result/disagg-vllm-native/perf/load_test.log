@@ -1,0 +1,1528 @@
+=== multi-turn load test ===
+URL:                http://gpt-oss-vllm-frontend:8000
+Model (tokenizer):  /mnt/models/hf/gpt-oss-120b
+Served-model-name:  openai/gpt-oss-120b
+Reasoning effort:   low
+DISABLE_CONVERSATION_ID: 1
+Num clients:        40
+Max active conv:    40
+Num conversations:  40
+Num turns:          30
+Prefix tokens:      20000
+Random input:       10000
+Per-turn input:     2048
+Limit tokens:       900-900
+Run dir:            /results/gpt-oss-vllm/20260603T085155
+Started:            2026-06-03T08:51:55+00:00
+==================================
+--- Generating dataset ---
+Loading tokenizer from '/mnt/models/hf/gpt-oss-120b' ...
+Vocab size: 199998
+Generating 40 conversations x 30 turns (turn0=30000 tokens, turn1+=2048 tokens) ...
+  10/40 conversations done
+  20/40 conversations done
+  30/40 conversations done
+  40/40 conversations done
+Dataset written -> /results/gpt-oss-vllm/20260603T085155/perf/dataset.json  (40 conversations)
+--- Running benchmark ---
+03-06-2026 08:52:33 [INFO] - Namespace(input_file='/results/gpt-oss-vllm/20260603T085155/perf/dataset.json', output_file='/results/gpt-oss-vllm/20260603T085155/perf/multi_turn_conversations.json', seed=0, model='/mnt/models/hf/gpt-oss-120b', served_model_name='openai/gpt-oss-120b', url='http://gpt-oss-vllm-frontend:8000', num_clients=40, max_active_conversations=40, max_num_requests=None, warmup_step=False, max_turns=None, no_early_stop=True, limit_max_tokens=900, limit_min_tokens=900, request_rate=0, max_retries=0, conversation_sampling=<ConversationSampling.ROUND_ROBIN: 'round_robin'>, verify_output=False, request_timeout_sec=120, no_stream=False, excel_output=False, stats_json_output='/results/gpt-oss-vllm/20260603T085155/perf/multi_turn_stats.json', verbose=False, print_content=False, warmup_percentages='0%', trust_remote_code=False)
+03-06-2026 08:52:33 [INFO] - [92mInput parameters:[0m
+03-06-2026 08:52:33 [INFO] - url=http://gpt-oss-vllm-frontend:8000
+03-06-2026 08:52:33 [INFO] - model=/mnt/models/hf/gpt-oss-120b
+03-06-2026 08:52:33 [INFO] - num_clients=40
+03-06-2026 08:52:33 [INFO] - Warmup percentages (percentage of samples): [0.0]
+03-06-2026 08:52:33 [INFO] - Loading tokenizer
+03-06-2026 08:52:35 [INFO] - [94mCollecting information from server: http://gpt-oss-vllm-frontend:8000[0m
+03-06-2026 08:52:35 [INFO] - [94mModels:[0m
+03-06-2026 08:52:35 [INFO] - [94m	model_id='openai/gpt-oss-120b', max_model_len='N/A'[0m
+03-06-2026 08:52:35 [INFO] - Reading input file: /results/gpt-oss-vllm/20260603T085155/perf/dataset.json
+03-06-2026 08:52:35 [INFO] - Found 40 items in the input file
+03-06-2026 08:52:35 [INFO] - Using 40 unique conversations (IDs)
+03-06-2026 08:52:35 [INFO] - [92mStarting 40 clients[0m
+----------------------------------------------------------------------------------------------------
+[93mConversations statistics:[0m
+----------------------------------------------------------------------------------------------------
+           count  mean  std   min   25%  ...   90%   99%  99.9%  99.99%   max
+num_turns   40.0  60.0  0.0  60.0  60.0  ...  60.0  60.0   60.0    60.0  60.0
+
+[1 rows x 12 columns]
+----------------------------------------------------------------------------------------------------
+03-06-2026 08:52:35 [INFO] - [96mStarted client 0: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 1: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 2: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 3: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 4: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 5: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 6: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 7: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 8: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 9: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 10: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 11: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 12: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 13: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 14: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 15: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 16: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 17: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 18: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 19: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 20: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 21: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 22: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 23: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 24: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 25: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 26: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 27: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 28: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 29: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 30: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 31: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 32: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 33: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 34: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 35: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 36: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 37: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 38: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - [96mStarted client 39: max_num_requests=None, max_active_conversations=1[0m
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:52:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:53:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:16 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:30 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:44 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:44 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:54:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:00 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:00 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:00 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:01 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:19 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:30 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:30 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:30 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:38 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:38 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:41 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:46 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:46 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:46 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:46 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:46 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:46 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:51 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:51 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:55:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:00 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:05 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:16 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:16 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:38 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:38 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:38 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:41 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:44 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:56:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:00 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:09 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:10 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:11 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:11 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:11 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:11 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:11 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:24 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:38 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:48 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:51 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:57:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:01 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:05 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:05 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:05 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:05 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:07 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:09 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:09 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:09 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:09 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:09 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:09 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:23 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:24 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:24 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:25 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:34 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:44 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:44 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:44 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:45 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:46 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:50 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:58:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:00 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:06 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:08 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:10 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:10 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:10 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:10 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:10 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:15 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:24 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:24 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:27 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:28 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:35 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:39 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:43 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:47 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 08:59:59 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:04 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:11 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:14 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:31 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:32 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:33 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:36 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:37 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:40 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:41 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:41 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:41 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:41 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:42 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:49 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:51 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:52 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:53 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:54 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:55 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:56 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:57 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:00:58 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:01 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:01 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:01 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:02 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:03 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:10 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:11 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:12 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:13 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:14 [INFO] - [93mClient 22 has no more work[0m
+03-06-2026 09:01:14 [INFO] - [96mClient 22 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:14 [INFO] - [96m1 out of 40 clients finished[0m
+03-06-2026 09:01:14 [INFO] - [93mClient 3 has no more work[0m
+03-06-2026 09:01:14 [INFO] - [96mClient 3 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:14 [INFO] - [96m2 out of 40 clients finished[0m
+03-06-2026 09:01:14 [INFO] - [93mClient 24 has no more work[0m
+03-06-2026 09:01:14 [INFO] - [96mClient 24 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:14 [INFO] - [96m3 out of 40 clients finished[0m
+03-06-2026 09:01:14 [INFO] - [93mClient 32 has no more work[0m
+03-06-2026 09:01:14 [INFO] - [96mClient 32 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:14 [INFO] - [96m4 out of 40 clients finished[0m
+03-06-2026 09:01:16 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:16 [INFO] - [93mClient 4 has no more work[0m
+03-06-2026 09:01:16 [INFO] - [96mClient 4 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:16 [INFO] - [96m5 out of 40 clients finished[0m
+03-06-2026 09:01:16 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:16 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:17 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:17 [INFO] - [93mClient 14 has no more work[0m
+03-06-2026 09:01:17 [INFO] - [96mClient 14 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:17 [INFO] - [96m6 out of 40 clients finished[0m
+03-06-2026 09:01:18 [INFO] - [93mClient 23 has no more work[0m
+03-06-2026 09:01:18 [INFO] - [96mClient 23 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:18 [INFO] - [96m7 out of 40 clients finished[0m
+03-06-2026 09:01:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:18 [INFO] - [93mClient 18 has no more work[0m
+03-06-2026 09:01:18 [INFO] - [96mClient 18 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:18 [INFO] - [96m8 out of 40 clients finished[0m
+03-06-2026 09:01:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:18 [INFO] - [93mClient 11 has no more work[0m
+03-06-2026 09:01:18 [INFO] - [96mClient 11 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:18 [INFO] - [96m9 out of 40 clients finished[0m
+03-06-2026 09:01:18 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:20 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:21 [INFO] - [93mClient 0 has no more work[0m
+03-06-2026 09:01:21 [INFO] - [96mClient 0 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:21 [INFO] - [96mFinished 10 out of 40 conversations (25%), 9 out of 40 clients finished, collected 1164 measurements, runtime 525.982 sec[0m
+03-06-2026 09:01:21 [INFO] - [96mEstimated req/sec 2.213, estimated runtime left 1577.946 sec[0m
+03-06-2026 09:01:21 [INFO] - --------------------------------------------------
+03-06-2026 09:01:21 [INFO] - [moving_avg_ttft_ms       ] avg:   2429.337 (500 samples)
+03-06-2026 09:01:21 [INFO] - [moving_avg_tpot_ms       ] avg:     18.488 (500 samples)
+03-06-2026 09:01:21 [INFO] - [ttft_ms                  ] avg:   3448.404, min:    470.394, max:  19456.450
+03-06-2026 09:01:21 [INFO] - [tpot_ms                  ] avg:     15.667, min:      7.355, max:     22.017
+03-06-2026 09:01:21 [INFO] - [latency_ms               ] avg:  17437.226, min:   7082.673, max:  28655.440
+03-06-2026 09:01:21 [INFO] - [input_num_turns          ] avg:     29.113, min:      1.000, max:     59.000
+03-06-2026 09:01:21 [INFO] - [input_num_tokens         ] avg:  71162.873, min:  30000.000, max: 115133.000
+03-06-2026 09:01:21 [INFO] - [output_num_tokens        ] avg:    893.485, min:    891.000, max:    897.000
+03-06-2026 09:01:21 [INFO] - --------------------------------------------------
+03-06-2026 09:01:21 [INFO] - [96m10 out of 40 clients finished[0m
+03-06-2026 09:01:21 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:22 [INFO] - [93mClient 6 has no more work[0m
+03-06-2026 09:01:22 [INFO] - [96mClient 6 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:22 [INFO] - [96m11 out of 40 clients finished[0m
+03-06-2026 09:01:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:22 [INFO] - [93mClient 13 has no more work[0m
+03-06-2026 09:01:22 [INFO] - [96mClient 13 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:22 [INFO] - [96m12 out of 40 clients finished[0m
+03-06-2026 09:01:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:22 [INFO] - [93mClient 1 has no more work[0m
+03-06-2026 09:01:22 [INFO] - [96mClient 1 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:22 [INFO] - [96m13 out of 40 clients finished[0m
+03-06-2026 09:01:22 [INFO] - [93mClient 2 has no more work[0m
+03-06-2026 09:01:22 [INFO] - [96mClient 2 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:22 [INFO] - [96m14 out of 40 clients finished[0m
+03-06-2026 09:01:22 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:22 [INFO] - [93mClient 26 has no more work[0m
+03-06-2026 09:01:22 [INFO] - [96mClient 26 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:22 [INFO] - [96m15 out of 40 clients finished[0m
+03-06-2026 09:01:22 [INFO] - [93mClient 21 has no more work[0m
+03-06-2026 09:01:22 [INFO] - [96mClient 21 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:22 [INFO] - [96m16 out of 40 clients finished[0m
+03-06-2026 09:01:22 [INFO] - [93mClient 19 has no more work[0m
+03-06-2026 09:01:22 [INFO] - [96mClient 19 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:22 [INFO] - [96m17 out of 40 clients finished[0m
+03-06-2026 09:01:22 [INFO] - [93mClient 39 has no more work[0m
+03-06-2026 09:01:22 [INFO] - [96mClient 39 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:22 [INFO] - [96m18 out of 40 clients finished[0m
+03-06-2026 09:01:23 [INFO] - [93mClient 27 has no more work[0m
+03-06-2026 09:01:23 [INFO] - [96mClient 27 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:23 [INFO] - [96m19 out of 40 clients finished[0m
+03-06-2026 09:01:26 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:27 [INFO] - [93mClient 15 has no more work[0m
+03-06-2026 09:01:27 [INFO] - [96mClient 15 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:27 [INFO] - [96mFinished 20 out of 40 conversations (50%), 19 out of 40 clients finished, collected 1179 measurements, runtime 532.227 sec[0m
+03-06-2026 09:01:27 [INFO] - [96mEstimated req/sec 2.215, estimated runtime left 532.227 sec[0m
+03-06-2026 09:01:27 [INFO] - --------------------------------------------------
+03-06-2026 09:01:27 [INFO] - [moving_avg_ttft_ms       ] avg:   2397.846 (500 samples)
+03-06-2026 09:01:27 [INFO] - [moving_avg_tpot_ms       ] avg:     18.580 (500 samples)
+03-06-2026 09:01:27 [INFO] - [ttft_ms                  ] avg:   3421.616, min:    470.394, max:  19456.450
+03-06-2026 09:01:27 [INFO] - [tpot_ms                  ] avg:     15.716, min:      7.355, max:     22.017
+03-06-2026 09:01:27 [INFO] - [latency_ms               ] avg:  17454.955, min:   7082.673, max:  28655.440
+03-06-2026 09:01:27 [INFO] - [input_num_turns          ] avg:     29.485, min:      1.000, max:     59.000
+03-06-2026 09:01:27 [INFO] - [input_num_tokens         ] avg:  71708.856, min:  30000.000, max: 115234.000
+03-06-2026 09:01:27 [INFO] - [output_num_tokens        ] avg:    893.519, min:    891.000, max:    897.000
+03-06-2026 09:01:27 [INFO] - --------------------------------------------------
+03-06-2026 09:01:27 [INFO] - [96m20 out of 40 clients finished[0m
+03-06-2026 09:01:27 [INFO] - [93mClient 20 has no more work[0m
+03-06-2026 09:01:27 [INFO] - [96mClient 20 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:27 [INFO] - [96m21 out of 40 clients finished[0m
+03-06-2026 09:01:28 [INFO] - [93mClient 7 has no more work[0m
+03-06-2026 09:01:28 [INFO] - [96mClient 7 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:28 [INFO] - [96m22 out of 40 clients finished[0m
+03-06-2026 09:01:28 [INFO] - [93mClient 33 has no more work[0m
+03-06-2026 09:01:28 [INFO] - [96mClient 33 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:28 [INFO] - [96m23 out of 40 clients finished[0m
+03-06-2026 09:01:28 [INFO] - [93mClient 29 has no more work[0m
+03-06-2026 09:01:28 [INFO] - [96mClient 29 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:28 [INFO] - [96m24 out of 40 clients finished[0m
+03-06-2026 09:01:28 [INFO] - [93mClient 31 has no more work[0m
+03-06-2026 09:01:28 [INFO] - [96mClient 31 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:28 [INFO] - [96m25 out of 40 clients finished[0m
+03-06-2026 09:01:28 [INFO] - [93mClient 10 has no more work[0m
+03-06-2026 09:01:28 [INFO] - [96mClient 10 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:28 [INFO] - [96m26 out of 40 clients finished[0m
+03-06-2026 09:01:29 [INFO] - Using timeout of 180s based on max_tokens 900
+03-06-2026 09:01:30 [INFO] - [93mClient 5 has no more work[0m
+03-06-2026 09:01:30 [INFO] - [96mClient 5 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:30 [INFO] - [96m27 out of 40 clients finished[0m
+03-06-2026 09:01:30 [INFO] - [93mClient 38 has no more work[0m
+03-06-2026 09:01:30 [INFO] - [96mClient 38 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:30 [INFO] - [96m28 out of 40 clients finished[0m
+03-06-2026 09:01:30 [INFO] - [93mClient 36 has no more work[0m
+03-06-2026 09:01:30 [INFO] - [96mClient 36 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:30 [INFO] - [96m29 out of 40 clients finished[0m
+03-06-2026 09:01:30 [INFO] - [93mClient 25 has no more work[0m
+03-06-2026 09:01:30 [INFO] - [96mClient 25 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:30 [INFO] - [96mFinished 30 out of 40 conversations (75%), 29 out of 40 clients finished, collected 1190 measurements, runtime 535.651 sec[0m
+03-06-2026 09:01:30 [INFO] - [96mEstimated req/sec 2.222, estimated runtime left 178.55 sec[0m
+03-06-2026 09:01:30 [INFO] - --------------------------------------------------
+03-06-2026 09:01:30 [INFO] - [moving_avg_ttft_ms       ] avg:   2366.701 (500 samples)
+03-06-2026 09:01:30 [INFO] - [moving_avg_tpot_ms       ] avg:     18.545 (500 samples)
+03-06-2026 09:01:30 [INFO] - [ttft_ms                  ] avg:   3399.521, min:    470.394, max:  19456.450
+03-06-2026 09:01:30 [INFO] - [tpot_ms                  ] avg:     15.704, min:      7.355, max:     22.017
+03-06-2026 09:01:30 [INFO] - [latency_ms               ] avg:  17422.179, min:   7082.673, max:  28655.440
+03-06-2026 09:01:30 [INFO] - [input_num_turns          ] avg:     29.756, min:      1.000, max:     59.000
+03-06-2026 09:01:30 [INFO] - [input_num_tokens         ] avg:  72107.479, min:  30000.000, max: 115234.000
+03-06-2026 09:01:30 [INFO] - [output_num_tokens        ] avg:    893.551, min:    891.000, max:    897.000
+03-06-2026 09:01:30 [INFO] - --------------------------------------------------
+03-06-2026 09:01:30 [INFO] - [96m30 out of 40 clients finished[0m
+03-06-2026 09:01:31 [INFO] - [93mClient 9 has no more work[0m
+03-06-2026 09:01:31 [INFO] - [96mClient 9 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:31 [INFO] - [96m31 out of 40 clients finished[0m
+03-06-2026 09:01:31 [INFO] - [93mClient 37 has no more work[0m
+03-06-2026 09:01:31 [INFO] - [96mClient 37 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:31 [INFO] - [96m32 out of 40 clients finished[0m
+03-06-2026 09:01:32 [INFO] - [93mClient 30 has no more work[0m
+03-06-2026 09:01:32 [INFO] - [96mClient 30 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:32 [INFO] - [96m33 out of 40 clients finished[0m
+03-06-2026 09:01:32 [INFO] - [93mClient 16 has no more work[0m
+03-06-2026 09:01:32 [INFO] - [96mClient 16 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:32 [INFO] - [96m34 out of 40 clients finished[0m
+03-06-2026 09:01:32 [INFO] - [93mClient 35 has no more work[0m
+03-06-2026 09:01:32 [INFO] - [96mClient 35 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:32 [INFO] - [96m35 out of 40 clients finished[0m
+03-06-2026 09:01:32 [INFO] - [93mClient 12 has no more work[0m
+03-06-2026 09:01:32 [INFO] - [96mClient 12 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:32 [INFO] - [96m36 out of 40 clients finished[0m
+03-06-2026 09:01:32 [INFO] - [93mClient 17 has no more work[0m
+03-06-2026 09:01:32 [INFO] - [96mClient 17 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:32 [INFO] - [96m37 out of 40 clients finished[0m
+03-06-2026 09:01:32 [INFO] - [93mClient 28 has no more work[0m
+03-06-2026 09:01:32 [INFO] - [96mClient 28 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:32 [INFO] - [96m38 out of 40 clients finished[0m
+03-06-2026 09:01:34 [INFO] - [93mClient 8 has no more work[0m
+03-06-2026 09:01:34 [INFO] - [96mClient 8 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:34 [INFO] - [96m39 out of 40 clients finished[0m
+03-06-2026 09:01:35 [INFO] - [93mClient 34 has no more work[0m
+03-06-2026 09:01:35 [INFO] - [96mClient 34 is done (num_successes=30, num_failures=0)[0m
+03-06-2026 09:01:35 [INFO] - [96mFinished 40 out of 40 conversations (100%), 39 out of 40 clients finished, collected 1200 measurements, runtime 540.705 sec[0m
+03-06-2026 09:01:35 [INFO] - [96mEstimated req/sec 2.219, estimated runtime left 0.0 sec[0m
+03-06-2026 09:01:35 [INFO] - --------------------------------------------------
+03-06-2026 09:01:35 [INFO] - [moving_avg_ttft_ms       ] avg:   2339.512 (500 samples)
+03-06-2026 09:01:35 [INFO] - [moving_avg_tpot_ms       ] avg:     18.411 (500 samples)
+03-06-2026 09:01:35 [INFO] - [ttft_ms                  ] avg:   3379.462, min:    470.394, max:  19456.450
+03-06-2026 09:01:35 [INFO] - [tpot_ms                  ] avg:     15.658, min:      5.549, max:     22.017
+03-06-2026 09:01:35 [INFO] - [latency_ms               ] avg:  17361.193, min:   5941.843, max:  28655.440
+03-06-2026 09:01:35 [INFO] - [input_num_turns          ] avg:     30.000, min:      1.000, max:     59.000
+03-06-2026 09:01:35 [INFO] - [input_num_tokens         ] avg:  72465.553, min:  30000.000, max: 115234.000
+03-06-2026 09:01:35 [INFO] - [output_num_tokens        ] avg:    893.575, min:    891.000, max:    897.000
+03-06-2026 09:01:35 [INFO] - --------------------------------------------------
+03-06-2026 09:01:35 [INFO] - [96m40 out of 40 clients finished[0m
+03-06-2026 09:01:35 [INFO] - [96mAll 40 clients finished[0m
+03-06-2026 09:01:35 [INFO] - Collected 1200 samples from all the clients
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_0 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_1 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_2 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_3 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_4 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_5 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_6 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_7 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_8 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_9 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_10 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_11 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_12 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_13 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_14 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_15 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_16 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_17 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_18 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_19 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_20 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_21 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_22 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_23 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_24 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_25 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_26 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_27 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_28 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_29 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_30 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_31 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_32 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_33 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_34 (is alive: True)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_35 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_36 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_37 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_38 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - [96mWaiting for client client_39 (is alive: False)[0m
+03-06-2026 09:01:35 [INFO] - All 40 clients exited (successfully finished 40 out of 40 conversations)
+03-06-2026 09:01:35 [INFO] - [92mAll clients finished, benchmark runtime: 540.726 sec (540725.594 ms), requests per second: 2.219[0m
+03-06-2026 09:01:35 [INFO] - Processing 1200 samples...
+03-06-2026 09:01:35 [INFO] - [92mWriting per-request stats JSON: /results/gpt-oss-vllm/20260603T085155/perf/multi_turn_stats.json[0m
+03-06-2026 09:01:35 [INFO] - [92mWriting conversations file: /results/gpt-oss-vllm/20260603T085155/perf/multi_turn_conversations.json[0m
+----------------------------------------------------------------------------------------------------
+[93mParameters:[0m
+model=/mnt/models/hf/gpt-oss-120b
+num_clients=40
+num_conversations=40
+active_conversations=40
+seed=0
+min_tokens=900
+max_tokens=900
+----------------------------------------------------------------------------------------------------
+[93mStatistics summary:[0m
+runtime_sec = 540.174
+requests_per_sec = 2.222
+----------------------------------------------------------------------------------------------------
+                    count     mean      std      min      25%      50%      75%       90%       95%       99%     99.9%       max
+ttft_ms           1200.00  3379.46  3147.05   470.39  1160.68  2936.93  4558.08   5256.07   6381.21  17600.28  17929.82  19456.45
+tpot_ms           1200.00    15.66     3.25     5.55    12.84    15.92    18.07     20.27     20.94     21.81     21.96     22.02
+latency_ms        1200.00 17361.19  3678.93  5941.84 15177.75 16851.95 19621.07  21325.45  23674.90  27525.28  27693.10  28655.44
+input_num_turns   1200.00    30.00    17.32     1.00    15.00    30.00    45.00     53.20     57.00     59.00     59.00     59.00
+input_num_tokens  1200.00 72465.55 25412.22 30000.00 50438.75 72421.50 94473.75 106653.30 112138.20 115114.03 115217.80 115234.00
+output_num_tokens 1200.00   893.58     2.97   891.00   891.00   891.00   897.00    897.00    897.00    897.00    897.00    897.00
+output_num_chunks 1200.00   882.44     8.82   846.00   878.00   884.00   889.00    892.00    894.00    895.00    896.00    896.00
+----------------------------------------------------------------------------------------------------
+Finished: 2026-06-03T09:01:36+00:00

@@ -42,6 +42,21 @@ Job trong `bench.yaml` set `DISABLE_CONVERSATION_ID=1` và `REASONING_EFFORT=low
 
 ## Triển khai Dynamo (thư mục này)
 
+### TensorRT-LLM
+
 - `metadata.name`: `gpt-oss-trtllm` → frontend DNS: `gpt-oss-trtllm-frontend:8000`
-- Chỉ apply **một** file deployment tại một thời điểm (disagg-kvbm / disagg-native / agg-kvbm / agg-native).
+- Chỉ apply **một** file: `agg-trtllm-native.yaml` | `agg-trtllm-kvbm.yaml` | `disagg-trtllm-native.yaml` | `disagg-trtllm-kvbm.yaml`
+
+### vLLM
+
+- `metadata.name`: `gpt-oss-vllm` → frontend DNS: `gpt-oss-vllm-frontend:8000`
+- Image worker/frontend: `nvcr.io/nvidia/ai-dynamo/vllm-runtime:1.1.1`
+- Chỉ apply **một** file: `agg-vllm-native.yaml` | `agg-vllm-kvbm.yaml` | `disagg-vllm-native.yaml` | `disagg-vllm-kvbm.yaml`
+- Bench vLLM: sửa `bench.yaml` → `URL=http://gpt-oss-vllm-frontend:8000`, `BENCHMARK_STACK=gpt-oss-vllm` (hoặc tên stack cụ thể)
+
+| Pattern | KV tier | Disagg transfer |
+|---------|---------|-----------------|
+| `*-native` | GPU + prefix cache (`--enable-prefix-caching`) | `NixlConnector` |
+| `*-kvbm` | `DYN_KVBM_CPU_CACHE_GB` + `DynamoConnector` / `PdConnector` | prefill: KVBM+NIXL; decode: `NixlConnector` |
+
 - Node pin: `hla9104p1-escn8-smt-hgx47`

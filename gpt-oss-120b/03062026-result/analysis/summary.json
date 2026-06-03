@@ -1,6 +1,7 @@
 [
   {
-    "label": "agg-native",
+    "label": "trt-agg-native",
+    "backend": "TRT-LLM",
     "serving": "Aggregated",
     "kv": "Native",
     "n": 1200,
@@ -21,7 +22,8 @@
     "lat_p99": 38916.95420291
   },
   {
-    "label": "agg-kvbm",
+    "label": "trt-agg-kvbm",
+    "backend": "TRT-LLM",
     "serving": "Aggregated",
     "kv": "KVBM",
     "n": 1200,
@@ -42,7 +44,8 @@
     "lat_p99": 123386.75998691999
   },
   {
-    "label": "disagg-native",
+    "label": "trt-disagg-native",
+    "backend": "TRT-LLM",
     "serving": "Disaggregated",
     "kv": "Native",
     "n": 1200,
@@ -63,7 +66,8 @@
     "lat_p99": 60715.33834262999
   },
   {
-    "label": "disagg-kvbm",
+    "label": "trt-disagg-kvbm",
+    "backend": "TRT-LLM",
     "serving": "Disaggregated",
     "kv": "KVBM",
     "n": 1200,
@@ -82,5 +86,49 @@
     "lat_p50": 16333.904997,
     "lat_p95": 20537.6313905,
     "lat_p99": 26128.104420759995
+  },
+  {
+    "label": "vllm-disagg-native",
+    "backend": "vLLM",
+    "serving": "Disaggregated",
+    "kv": "Native",
+    "n": 1200,
+    "runtime": 540.174,
+    "rps": 2.222,
+    "out_tok_s": 1985.08258450055,
+    "ttft_mean": 3379.462061570842,
+    "ttft_p50": 2936.9257635000004,
+    "ttft_p95": 6381.214048299999,
+    "ttft_p99": 17600.281509819997,
+    "tpot_mean": 15.65759031104942,
+    "tpot_p50": 15.923980186516856,
+    "tpot_p95": 20.94360276049107,
+    "tpot_p99": 21.812306003258925,
+    "lat_mean": 17361.192781893336,
+    "lat_p50": 16851.946343,
+    "lat_p95": 23674.90481925,
+    "lat_p99": 27525.2764986
+  },
+  {
+    "label": "vllm-disagg-kvbm",
+    "backend": "vLLM",
+    "serving": "Disaggregated",
+    "kv": "KVBM",
+    "n": 1200,
+    "runtime": 518.922,
+    "rps": 2.312,
+    "out_tok_s": 2066.3240332843857,
+    "ttft_mean": 2362.734445053798,
+    "ttft_p50": 1081.3342440000001,
+    "ttft_p95": 5799.626014237904,
+    "ttft_p99": 18091.469446220002,
+    "tpot_mean": 16.260531297312962,
+    "tpot_p50": 16.374434091573033,
+    "tpot_p95": 21.676646684887636,
+    "tpot_p99": 22.279536472008925,
+    "lat_mean": 16882.5837571,
+    "lat_p50": 16677.441792999998,
+    "lat_p95": 22805.8693616,
+    "lat_p99": 28117.983746089998
   }
 ]
