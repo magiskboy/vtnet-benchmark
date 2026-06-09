@@ -1,0 +1,192 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-dept-serving
+
+---
+apiVersion: nvidia.com/v1alpha1
+kind: DynamoGraphDeployment
+metadata:
+  name: gpt-oss-vllm
+  namespace: ai-dept-serving
+  labels:
+    app.kubernetes.io/part-of: dynamo-disagg-vllm
+    benchmark.kvcache/stack: vllm-disagg-lmcache
+spec:
+  services:
+    frontend:
+      componentType: frontend
+      replicas: 1
+      envs:
+        - { name: DYN_ROUTER_MODE, value: kv }
+        - { name: DYN_KV_CACHE_BLOCK_SIZE, value: "32" }
+        - { name: PYTHONHASHSEED, value: "0" }
+      resources:
+        requests: { cpu: "8", memory: 64Gi }
+        limits:   { cpu: "8", memory: 64Gi }
+      extraPodSpec:
+        volumes:
+          - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+        nodeName: hla9104p1-escn8-smt-hgx47
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/vllm-runtime:1.1.1
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          command: [python3, -m, dynamo.frontend]
+          args:
+            - --http-port
+            - "8000"
+            - --router-mode
+            - kv
+            - --model-path
+            - /mnt/models/hf/gpt-oss-120b
+            - --model-name
+            - openai/gpt-oss-120b
+
+    prefill:
+      componentType: worker
+      subComponentType: prefill
+      replicas: 1
+      sharedMemory:
+        size: 80Gi
+      resources:
+        requests:
+          gpu: "4"
+          cpu: "32"
+          memory: 1536Gi
+          custom: { ephemeral-storage: 100Gi, rdma/rdma_shared_devices_ib: "4" }
+        limits:
+          gpu: "4"
+          cpu: "32"
+          memory: 1536Gi
+          custom:
+            rdma/rdma_shared_devices_ib: "4"
+      envs:
+        - { name: UCX_TLS, value: "rc_x,rc,dc_x,dc,cuda_copy,cuda_ipc" }
+        - { name: UCX_RNDV_SCHEME, value: get_zcopy }
+        - { name: UCX_RNDV_THRESH, value: "0" }
+        - { name: UCX_IB_REG_METHODS, value: "odp,rcache" }
+        - { name: UCX_IB_ADDR_TYPE, value: eth }
+        - { name: UCX_NET_DEVICES, value: "mlx5_0:1" }
+        - { name: UCX_IB_GID_INDEX, value: "0" }
+        - { name: NIXL_TELEMETRY_ENABLE, value: "y" }
+        - { name: RUST_LOG, value: "info,tower_http=off" }
+        - { name: VLLM_NIXL_SIDE_CHANNEL_PORT, value: "20097" }
+        - { name: PYTHONHASHSEED, value: "0" }
+        - { name: LMCACHE_CHUNK_SIZE, value: "256" }
+        - { name: LMCACHE_LOCAL_CPU, value: "True" }
+        - { name: LMCACHE_MAX_LOCAL_CPU_SIZE, value: "1024" }
+        - { name: NCCL_IB_DISABLE, value: "0" }
+        - { name: NCCL_P2P_LEVEL, value: NVL }
+        - { name: NCCL_DEBUG, value: ERROR }
+      extraPodSpec:
+        nodeName: hla9104p1-escn8-smt-hgx47
+        volumes:
+          - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/vllm-runtime:1.1.1
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          command:
+            - python3
+            - -m
+            - dynamo.vllm
+          args:
+            - --model
+            - /mnt/models/hf/gpt-oss-120b
+            - --served-model-name
+            - openai/gpt-oss-120b
+            - --disaggregation-mode
+            - prefill
+            - --tensor-parallel-size
+            - "4"
+            - --max-model-len
+            - "120000"
+            - --max-num-batched-tokens
+            - "65536"
+            - --max-num-seqs
+            - "256"
+            - --gpu-memory-utilization
+            - "0.85"
+            - --enable-chunked-prefill
+            - --trust-remote-code
+            - --dyn-reasoning-parser
+            - gpt_oss
+            - --dyn-tool-call-parser
+            - harmony
+            - --kv-transfer-config
+            - '{"kv_connector":"PdConnector","kv_role":"kv_both","kv_connector_extra_config":{"connectors":[{"kv_connector":"LMCacheConnectorV1","kv_role":"kv_both"},{"kv_connector":"NixlConnector","kv_role":"kv_both"}]},"kv_connector_module_path":"kvbm.vllm_integration.connector"}'
+            - --kv-events-config
+            - '{"publisher":"zmq","topic":"kv-events","endpoint":"tcp://*:20081","enable_kv_cache_events":true}'
+
+    decode:
+      componentType: worker
+      subComponentType: decode
+      replicas: 1
+      sharedMemory:
+        size: 80Gi
+      resources:
+        requests:
+          gpu: "4"
+          cpu: "32"
+          memory: 320Gi
+          custom: { ephemeral-storage: 100Gi, rdma/rdma_shared_devices_ib: "4" }
+        limits:
+          gpu: "4"
+          cpu: "32"
+          memory: 320Gi
+          custom:
+            rdma/rdma_shared_devices_ib: "4"
+      envs:
+        - { name: UCX_TLS, value: "rc_x,rc,dc_x,dc,cuda_copy,cuda_ipc" }
+        - { name: UCX_RNDV_SCHEME, value: get_zcopy }
+        - { name: UCX_RNDV_THRESH, value: "0" }
+        - { name: UCX_IB_REG_METHODS, value: "odp,rcache" }
+        - { name: UCX_IB_ADDR_TYPE, value: eth }
+        - { name: UCX_NET_DEVICES, value: "mlx5_0:1" }
+        - { name: UCX_IB_GID_INDEX, value: "0" }
+        - { name: NIXL_TELEMETRY_ENABLE, value: "y" }
+        - { name: RUST_LOG, value: "info,tower_http=off" }
+        - { name: PYTHONHASHSEED, value: "0" }
+        - { name: NCCL_IB_DISABLE, value: "0" }
+        - { name: NCCL_P2P_LEVEL, value: NVL }
+        - { name: NCCL_DEBUG, value: ERROR }
+      extraPodSpec:
+        nodeName: hla9104p1-escn8-smt-hgx47
+        volumes:
+          - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+        mainContainer:
+          image: nvcr.io/nvidia/ai-dynamo/vllm-runtime:1.1.1
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          command:
+            - python3
+            - -m
+            - dynamo.vllm
+          args:
+            - --model
+            - /mnt/models/hf/gpt-oss-120b
+            - --served-model-name
+            - openai/gpt-oss-120b
+            - --disaggregation-mode
+            - decode
+            - --tensor-parallel-size
+            - "4"
+            - --max-model-len
+            - "128000"
+            - --max-num-batched-tokens
+            - "65536"
+            - --max-num-seqs
+            - "512"
+            - --gpu-memory-utilization
+            - "0.85"
+            - --enable-chunked-prefill
+            - --enable-prefix-caching
+            - --trust-remote-code
+            - --dyn-reasoning-parser
+            - gpt_oss
+            - --dyn-tool-call-parser
+            - harmony
+            - --kv-transfer-config
+            - '{"kv_connector":"NixlConnector","kv_role":"kv_both"}'

@@ -58,5 +58,10 @@ Job trong `bench.yaml` set `DISABLE_CONVERSATION_ID=1` và `REASONING_EFFORT=low
 |---------|---------|-----------------|
 | `*-native` | GPU + prefix cache (`--enable-prefix-caching`) | `NixlConnector` |
 | `*-kvbm` | `DYN_KVBM_CPU_CACHE_GB` + `DynamoConnector` / `PdConnector` | prefill: KVBM+NIXL; decode: `NixlConnector` |
+| `disagg-*-lmcache` | `LMCACHE_*` CPU tier 1024 GiB (`LMCACHE_MAX_LOCAL_CPU_SIZE`) | prefill: LMCache+NIXL; decode: NIXL / DEFAULT transceiver |
+
+- Disagg LMCache: `disagg-vllm-lmcache.yaml` | `disagg-trtllm-lmcache.yaml` (chỉ apply một stack).
+- TRT-LLM LMCache: `kv_connector_config` → `lmcache.integration.tensorrt_llm.tensorrt_adapter` ([LMCache TRT-LLM](https://docs.lmcache.ai/integrations/tensorrt_llm.html)); cần `uv pip install lmcache` trên prefill pod.
+- vLLM LMCache: prefill `PdConnector` (`LMCacheConnectorV1` + `NixlConnector`) theo `disagg_lmcache.sh` Dynamo.
 
 - Node pin: `hla9104p1-escn8-smt-hgx47`
