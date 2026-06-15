@@ -30,8 +30,6 @@ Hai run dùng **cùng cấu hình phần cứng và topology serving**; chỉ kh
 
 > Run `deepseek-flash-fp4` chỉ hoàn tất **958/1 200** request (15/40 conversation); run `deepseek-flash-base-fp8` hoàn tất đủ **1 200/1 200** request. Chênh lệch throughput cần được đọc kèm mức hoàn thành này.
 
-![Throughput & system-level metrics](images/plot_throughput.png)
-
 ### 1.2 Độ trễ — Time to First Token (TTFT)
 
 | Percentile | `deepseek-flash-fp4` (ms) | `deepseek-flash-base-fp8` (ms) | Chênh lệch (base so với fp4) |
@@ -59,15 +57,23 @@ Hai run dùng **cùng cấu hình phần cứng và topology serving**; chỉ kh
 | p95 | 150 012 | 96 121 | **−35,9%** |
 | p99 | 174 348 | 101 474 | **−41,8%** |
 
-![Latency percentiles — TTFT, TPOT, E2E](images/plot_latency_percentiles.png)
+### 1.5 Biểu đồ minh họa
 
-Phân phối per-request: `base-fp8` thắng rõ ở TTFT (CDF dịch trái), `fp4` thắng ở TPOT (CDF dịch trái).
+**Throughput** — runtime, RPS, output tok/s ([`plot_throughput.png`](images/plot_throughput.png)):
 
-![Per-request latency distributions](images/plot_distributions.png)
+![images/plot_throughput.png](images/plot_throughput.png)
 
-Trên biểu đồ throughput vs E2E p95, `deepseek-flash-base-fp8` nằm ở vùng throughput cao hơn ~45% đồng thời tail latency thấp hơn ~36%.
+**Latency percentiles** — TTFT, TPOT, E2E theo p50/p95/p99 ([`plot_latency_percentiles.png`](images/plot_latency_percentiles.png)):
 
-![Throughput vs tail-latency trade-off](images/plot_tradeoff.png)
+![images/plot_latency_percentiles.png](images/plot_latency_percentiles.png)
+
+**Phân phối CDF per-request** — TTFT (trái), TPOT (giữa), E2E (phải) ([`plot_distributions.png`](images/plot_distributions.png)):
+
+![images/plot_distributions.png](images/plot_distributions.png)
+
+**Trade-off throughput vs tail latency** — output tok/s vs E2E p95 ([`plot_tradeoff.png`](images/plot_tradeoff.png)):
+
+![images/plot_tradeoff.png](images/plot_tradeoff.png)
 
 ---
 
@@ -77,19 +83,19 @@ Vì hai run chia sẻ cùng stack **disagg 1P1D, TP=8** trên cả prefill và d
 
 ### Ảnh hưởng lên băng thông
 
-`DeepSeek-V4-Flash-Base` cho throughput hệ thống cao hơn rõ rệt: runtime ngắn hơn 13,5%, RPS và output tok/s cao hơn ~45%. Tuy nhiên, run `Flash` không hoàn thành đủ workload (958/1 200 request), nên các chỉ số throughput của fp4 phản ánh cả khả năng chịu tải kém hơn dưới cùng điều kiện serving.
+`DeepSeek-V4-Flash-Base` cho throughput hệ thống cao hơn rõ rệt: runtime ngắn hơn 13,5%, RPS và output tok/s cao hơn ~45% (mục 1.1). [Biểu đồ throughput](images/plot_throughput.png) xác nhận `base-fp8` vượt trội trên cả ba metric hệ thống. Tuy nhiên, run `Flash` không hoàn thành đủ workload (958/1 200 request), nên các chỉ số throughput của fp4 phản ánh cả khả năng chịu tải kém hơn dưới cùng điều kiện serving.
 
 ### Ảnh hưởng lên TTFT
 
-`Flash-Base` có TTFT thấp hơn ở mọi percentile, đặc biệt tail (p95 −42%, p99 −48%). Điều này cho thấy prefill path của Base ổn định hơn: ít request bị xếp hàng lâu trước token đầu tiên. Với `Flash`, TTFT p95/p99 cao gấp ~1,7–1,9 lần, khớp với hình ảnh hệ thống quá tải một phần (timeout, backlog prefill).
+`Flash-Base` có TTFT thấp hơn ở mọi percentile, đặc biệt tail (p95 −42%, p99 −48%). Prefill path của Base ổn định hơn: ít request bị xếp hàng lâu trước token đầu tiên. Với `Flash`, TTFT p95/p99 cao gấp ~1,7–1,9 lần, khớp với hệ thống quá tải một phần (timeout, backlog prefill). Panel TTFT ở [percentiles](images/plot_latency_percentiles.png) và [CDF](images/plot_distributions.png) đều cho thấy `base-fp8` dịch trái.
 
 ### Ảnh hưởng lên TPOT
 
-`Flash` decode nhanh hơn **19–29%** mỗi output token so với `Flash-Base` trên mọi percentile — đây là lợi thế rõ nhất của variant Flash: kernel decode được tối ưu cho tốc độ generate. Tuy nhiên, lợi thế TPOT không đủ bù TTFT cao và mức hoàn thành thấp hơn.
+`Flash` decode nhanh hơn **19–29%** mỗi output token so với `Flash-Base` trên mọi percentile — lợi thế rõ nhất của variant Flash. Panel TPOT ở [percentiles](images/plot_latency_percentiles.png) và [CDF](images/plot_distributions.png) cho thấy `fp4` dịch trái. Tuy nhiên, lợi thế TPOT không đủ bù TTFT cao và mức hoàn thành thấp hơn.
 
 ### Ảnh hưởng lên E2E
 
-E2E p50 gần như bằng nhau (~65 s) vì phần lớn thời gian là generate 900 output token — TPOT chiếm ưu thế ở median. Khác biệt xuất hiện rõ ở tail: `Flash-Base` giảm E2E p95/p99 **36–42%**, phản ánh TTFT tail thấp hơn và hệ thống ổn định hơn. Profile tổng thể trên cùng cấu hình serving: **Flash-Base thắng ở responsiveness và ổn định**, **Flash thắng ở tốc độ decode per-token**.
+E2E p50 gần như bằng nhau (~65 s) vì phần lớn thời gian là generate 900 output token — TPOT chiếm ưu thế ở median. Khác biệt xuất hiện rõ ở tail: `Flash-Base` giảm E2E p95/p99 **36–42%**, phản ánh qua panel E2E ở [percentiles](images/plot_latency_percentiles.png) và [CDF](images/plot_distributions.png). [Biểu đồ trade-off](images/plot_tradeoff.png) xác nhận `base-fp8` ở vùng throughput cao + tail latency thấp. Profile tổng thể: **Flash-Base thắng ở responsiveness và ổn định**, **Flash thắng ở tốc độ decode per-token**.
 
 ### Hạn chế so sánh
 
