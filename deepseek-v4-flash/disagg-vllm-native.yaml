@@ -1,0 +1,256 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-dept-serving
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dsv4-vllm-prefill
+  namespace: ai-dept-serving
+  labels:
+    app: dsv4-vllm-prefill
+    benchmark.kvcache/stack: deepseek-v4-flash-vllm-disagg-native
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: dsv4-vllm-prefill }
+  template:
+    metadata:
+      labels: { app: dsv4-vllm-prefill }
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      hostIPC: true
+      nodeName: hla9104p1-escn8-smt-hgx46
+      containers:
+        # H200/Hopper: v0.22.1 (recipes PD, https://recipes.vllm.ai/deepseek-ai/DeepSeek-V4-Flash-Base).
+        # vllm/vllm-openai:deepseekv4-cu130 — phù hợp blog Blackwell (https://vllm.ai/blog/2026-04-24-deepseek-v4).
+        - name: vllm
+          image: vllm/vllm-openai:v0.22.0
+          ports: [{ containerPort: 8000 }]
+          env:
+            - { name: VLLM_USE_DEEP_GEMM, value: "1" }
+            - { name: TILELANG_CLEANUP_TEMP_FILES, value: "1" }
+            - { name: VLLM_DISABLE_COMPILE_CACHE, value: "1" }
+            - { name: VLLM_ENGINE_READY_TIMEOUT_S, value: "3600" }
+            - { name: VLLM_RPC_TIMEOUT, value: "600000" }
+            - { name: VLLM_LOG_STATS_INTERVAL, value: "1" }
+            - { name: VLLM_NIXL_SIDE_CHANNEL_PORT, value: "5600" }
+            - name: VLLM_NIXL_SIDE_CHANNEL_HOST
+              valueFrom: { fieldRef: { fieldPath: status.hostIP } }
+            - { name: UCX_TLS, value: "rc_x,rc,dc_x,dc,cuda_copy,cuda_ipc" }
+            - { name: UCX_RNDV_SCHEME, value: get_zcopy }
+            - { name: UCX_RNDV_THRESH, value: "0" }
+            - { name: UCX_IB_REG_METHODS, value: "odp,rcache" }
+            - { name: UCX_IB_ADDR_TYPE, value: eth }
+            - { name: UCX_NET_DEVICES, value: "mlx5_0:1" }
+            - { name: UCX_IB_GID_INDEX, value: "0" }
+            - { name: NCCL_IB_DISABLE, value: "0" }
+            - { name: NCCL_P2P_LEVEL, value: NVL }
+            - { name: NCCL_DEBUG, value: ERROR }
+          command: [/bin/bash, -lc]
+          args:
+            - |
+              set -euo pipefail
+              exec vllm serve \
+                /mnt/models/hf/DeepSeek-V4-Flash \
+                --served-model-name deepseek-ai/DeepSeek-V4-Flash-Base \
+                --trust-remote-code \
+                --kv-cache-dtype fp8_e4m3 \
+                --quantization fp8 \
+                --block-size 256 \
+                --port 8000 \
+                --data-parallel-size 8 \
+                --data-parallel-size-local 8 \
+                --data-parallel-start-rank 0 \
+                --enable-expert-parallel \
+                --max-num-seqs 8 \
+                --max-num-batched-tokens 65536 \
+                --tokenizer-mode deepseek_v4 \
+                --tool-call-parser deepseek_v4 \
+                --enable-auto-tool-choice \
+                --reasoning-parser deepseek_v4 \
+                --max-model-len 128000 \
+                --enable-sleep-mode \
+                --no-disable-hybrid-kv-cache-manager \
+                --gpu-memory-utilization 0.8 \
+                --disable-uvicorn-access-log \
+                --kv-transfer-config '{"kv_connector":"NixlConnector","kv_role":"kv_producer","kv_load_failure_policy":"fail"}'
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          resources:
+            requests:
+              nvidia.com/gpu: "8"
+              cpu: "64"
+              memory: 1536Gi
+              ephemeral-storage: 100Gi
+              rdma/rdma_shared_devices_ib: "8"
+            limits:
+              nvidia.com/gpu: "8"
+              cpu: "64"
+              memory: 1536Gi
+              rdma/rdma_shared_devices_ib: "8"
+      volumes:
+        - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dsv4-vllm-prefill
+  namespace: ai-dept-serving
+spec:
+  selector: { app: dsv4-vllm-prefill }
+  ports: [{ port: 8000, targetPort: 8000 }]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dsv4-vllm-decode
+  namespace: ai-dept-serving
+  labels:
+    app: dsv4-vllm-decode
+    benchmark.kvcache/stack: deepseek-v4-flash-vllm-disagg-native
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: dsv4-vllm-decode }
+  template:
+    metadata:
+      labels: { app: dsv4-vllm-decode }
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      hostIPC: true
+      nodeName: hla9104p1-escn8-smt-hgx47
+      containers:
+        - name: vllm
+          image: vllm/vllm-openai:v0.22.0
+          ports: [{ containerPort: 8000 }]
+          env:
+            - { name: VLLM_USE_DEEP_GEMM, value: "1" }
+            - { name: TILELANG_CLEANUP_TEMP_FILES, value: "1" }
+            - { name: VLLM_DISABLE_COMPILE_CACHE, value: "1" }
+            - { name: VLLM_ENGINE_READY_TIMEOUT_S, value: "3600" }
+            - { name: VLLM_RPC_TIMEOUT, value: "600000" }
+            - { name: VLLM_LOG_STATS_INTERVAL, value: "1" }
+            - { name: VLLM_NIXL_SIDE_CHANNEL_PORT, value: "5600" }
+            - name: VLLM_NIXL_SIDE_CHANNEL_HOST
+              valueFrom: { fieldRef: { fieldPath: status.hostIP } }
+            - { name: UCX_TLS, value: "rc_x,rc,dc_x,dc,cuda_copy,cuda_ipc" }
+            - { name: UCX_RNDV_SCHEME, value: get_zcopy }
+            - { name: UCX_RNDV_THRESH, value: "0" }
+            - { name: UCX_IB_REG_METHODS, value: "odp,rcache" }
+            - { name: UCX_IB_ADDR_TYPE, value: eth }
+            - { name: UCX_NET_DEVICES, value: "mlx5_0:1" }
+            - { name: UCX_IB_GID_INDEX, value: "0" }
+            - { name: NCCL_IB_DISABLE, value: "0" }
+            - { name: NCCL_P2P_LEVEL, value: NVL }
+            - { name: NCCL_DEBUG, value: ERROR }
+          command: [/bin/bash, -lc]
+          args:
+            - |
+              set -euo pipefail
+              exec vllm serve \
+                /mnt/models/hf/DeepSeek-V4-Flash \
+                --served-model-name deepseek-ai/DeepSeek-V4-Flash-Base \
+                --trust-remote-code \
+                --kv-cache-dtype fp8_e4m3 \
+                --quantization fp8 \
+                --block-size 256 \
+                --port 8000 \
+                --data-parallel-size 8 \
+                --data-parallel-size-local 8 \
+                --data-parallel-start-rank 0 \
+                --enable-expert-parallel \
+                --max-num-seqs 1536 \
+                --max-num-batched-tokens 1536 \
+                --max-cudagraph-capture-size 1536 \
+                --compilation-config '{"cudagraph_mode":"FULL_DECODE_ONLY"}' \
+                --tokenizer-mode deepseek_v4 \
+                --tool-call-parser deepseek_v4 \
+                --enable-auto-tool-choice \
+                --reasoning-parser deepseek_v4 \
+                --max-model-len 128000 \
+                --no-disable-hybrid-kv-cache-manager \
+                --disable-uvicorn-access-log \
+                --gpu-memory-utilization 0.8 \
+                --kv-transfer-config '{"kv_connector":"NixlConnector","kv_role":"kv_consumer","kv_load_failure_policy":"fail","kv_buffer_device":"cuda"}'
+          volumeMounts:
+            - { name: models, mountPath: /mnt/models }
+          resources:
+            requests:
+              nvidia.com/gpu: "8"
+              cpu: "64"
+              memory: 512Gi
+              ephemeral-storage: 100Gi
+              rdma/rdma_shared_devices_ib: "8"
+            limits:
+              nvidia.com/gpu: "8"
+              cpu: "64"
+              memory: 512Gi
+              rdma/rdma_shared_devices_ib: "8"
+      volumes:
+        - { name: models, hostPath: { path: /mnt/models, type: Directory } }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dsv4-vllm-decode
+  namespace: ai-dept-serving
+spec:
+  selector: { app: dsv4-vllm-decode }
+  ports: [{ port: 8000, targetPort: 8000 }]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dsv4-vllm-router
+  namespace: ai-dept-serving
+  labels:
+    app: dsv4-vllm-router
+    benchmark.kvcache/stack: deepseek-v4-flash-vllm-disagg-native
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: dsv4-vllm-router }
+  template:
+    metadata:
+      labels: { app: dsv4-vllm-router }
+    spec:
+      nodeName: hla9104p1-escn8-smt-hgx47
+      containers:
+        - name: router
+          image: vllm/vllm-openai:v0.22.0
+          ports: [{ containerPort: 8000 }]
+          command: [bash, -lc]
+          args:
+            - |
+              pip install -q vllm-router && exec vllm-router \
+                --policy round_robin \
+                --vllm-pd-disaggregation \
+                --kv-connector nixl \
+                --prefill http://dsv4-vllm-prefill:8000 \
+                --decode http://dsv4-vllm-decode:8000 \
+                --host 0.0.0.0 \
+                --port 8000 \
+                --intra-node-data-parallel-size 8
+          resources:
+            requests: { cpu: "4", memory: 8Gi }
+            limits:   { cpu: "8", memory: 16Gi }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: llm-bench-frontend
+  namespace: ai-dept-serving
+spec:
+  selector: { app: dsv4-vllm-router }
+  ports: [{ port: 8000, targetPort: 8000 }]

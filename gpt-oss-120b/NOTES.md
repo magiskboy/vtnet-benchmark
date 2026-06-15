@@ -3,7 +3,7 @@
 ## Bench Job (`bench.yaml`)
 
 - File độc lập ở repo root, không bundle vào các yaml triển khai Dynamo.
-- Apply sau khi stack `gpt-oss-trtllm` ready: `kubectl apply -f bench.yaml`
+- Apply sau khi `llm-bench-frontend` ready: `kubectl apply -f bench.yaml`
 - Image: `10.29.252.145:5000/vllm-bench:exp04` (multi-turn scripts trong image).
 - Kết quả trên host: `/mnt/models/nkthanh/<BENCHMARK_STACK>/<timestamp>/perf/`
 - Patched script: Job ghi file bằng `cat <<'PATCHED_BENCH_EOF'` (nội dung embed trong `bench.yaml`) trước khi chạy benchmark — **không dùng ConfigMap**.
@@ -24,35 +24,39 @@ Hệ quả: mọi client `num_successes=0`, log `Collected 0 samples from all th
 | Giá trị env | Hành vi |
 |-------------|---------|
 | `1` / `true` / `yes` | Không gửi `conversation_id` lên API (dùng cho Dynamo) |
-| unset / `0` | Gửi `conversation_id` (tương thích endpoint/router cũ, ví dụ `bench-exp04`) |
+| unset / `0` | Gửi `conversation_id` (tương thích PD router native vLLM) |
 
-Job trong `bench.yaml` set `DISABLE_CONVERSATION_ID=1` và `REASONING_EFFORT=low` (gửi qua `chat_template_args` trong request).
+Bench GPT-OSS Dynamo: set `DISABLE_CONVERSATION_ID=1` và `REASONING_EFFORT=low`.
 
 `disagg-trtllm-native.yaml`: worker dùng `--dyn-reasoning-parser gpt_oss` + `--dyn-tool-call-parser harmony`.
 
 ## Endpoint & model
 
-| Biến | Giá trị hiện tại |
-|------|------------------|
-| `URL` | `http://gpt-oss-trtllm-frontend:8000` |
-| `SERVED_MODEL_NAME` | `openai/gpt-oss-120b` |
-| `MODEL` (tokenizer path) | `/mnt/models/hf/gpt-oss-120b` |
+Endpoint benchmark **cố định** cho mọi stack (xem `AGENTS.md`):
 
-Đổi stack benchmark: sửa `BENCHMARK_STACK` (tên thư mục kết quả), không cần đổi tên deployment.
+| Biến | Giá trị |
+|------|---------|
+| `URL` | `http://llm-bench-frontend:8000` |
+
+Đổi stack benchmark: sửa `MODEL`, `SERVED_MODEL_NAME`, `BENCHMARK_STACK`, `DISABLE_CONVERSATION_ID`, `REASONING_EFFORT` — **không đổi `URL`**.
+
+| Stack | `MODEL` | `SERVED_MODEL_NAME` | `DISABLE_CONVERSATION_ID` |
+|-------|---------|---------------------|---------------------------|
+| GPT-OSS Dynamo | `/mnt/models/hf/gpt-oss-120b` | `openai/gpt-oss-120b` | `1` |
+| DeepSeek native | `/mnt/models/hf/DeepSeek-V4-Flash-Base` | `deepseek-ai/DeepSeek-V4-Flash-Base` | `0` |
 
 ## Triển khai Dynamo (thư mục này)
 
+Tất cả file Dynamo dùng `metadata.name: llm-bench`; service key `frontend` → operator tạo Service `llm-bench-frontend:8000` (convention Dynamo: `<dgd-name>-<service-key>`). Phân biệt stack qua label `benchmark.kvcache/stack`, không qua tên DGD.
+
 ### TensorRT-LLM
 
-- `metadata.name`: `gpt-oss-trtllm` → frontend DNS: `gpt-oss-trtllm-frontend:8000`
-- Chỉ apply **một** file: `agg-trtllm-native.yaml` | `agg-trtllm-kvbm.yaml` | `disagg-trtllm-native.yaml` | `disagg-trtllm-kvbm.yaml`
+- Chỉ apply **một** file: `agg-trtllm-native.yaml` | `agg-trtllm-kvbm.yaml` | `disagg-trtllm-native.yaml` | `disagg-trtllm-kvbm.yaml` | `disagg-trtllm-lmcache.yaml`
 
 ### vLLM
 
-- `metadata.name`: `gpt-oss-vllm` → frontend DNS: `gpt-oss-vllm-frontend:8000`
 - Image worker/frontend: `nvcr.io/nvidia/ai-dynamo/vllm-runtime:1.1.1`
-- Chỉ apply **một** file: `agg-vllm-native.yaml` | `agg-vllm-kvbm.yaml` | `disagg-vllm-native.yaml` | `disagg-vllm-kvbm.yaml`
-- Bench vLLM: sửa `bench.yaml` → `URL=http://gpt-oss-vllm-frontend:8000`, `BENCHMARK_STACK=gpt-oss-vllm` (hoặc tên stack cụ thể)
+- Chỉ apply **một** file: `agg-vllm-native.yaml` | `agg-vllm-kvbm.yaml` | `disagg-vllm-native.yaml` | `disagg-vllm-kvbm.yaml` | `disagg-vllm-lmcache.yaml`
 
 | Pattern | KV tier | Disagg transfer |
 |---------|---------|-----------------|

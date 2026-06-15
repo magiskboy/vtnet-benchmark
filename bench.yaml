@@ -1,10 +1,10 @@
-# Apply: kubectl apply -f bench.yaml
-# Patched script cat vào pod; REASONING_EFFORT=low; DISABLE_CONVERSATION_ID=1
+# Apply: kubectl apply -f bench.yaml  (sau khi llm-bench-frontend ready)
+# Stack: deepseek-v4-flash/disagg-vllm-native.yaml — non-think; conversation_id bật (PD router)
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: gpt-oss-bench
+  name: dsv4-vllm-bench
   namespace: ai-dept-serving
 spec:
   backoffLimit: 0
@@ -280,7 +280,10 @@ spec:
               
                   reasoning_effort = os.environ.get("REASONING_EFFORT")
                   if reasoning_effort:
-                      payload["chat_template_args"] = {"reasoning_effort": reasoning_effort}
+                      # DeepSeek V4: chat_template_kwargs (recipes.vllm.ai/deepseek-ai/DeepSeek-V4-Flash)
+                      kwargs: dict[str, object] = {"thinking": True}
+                      kwargs["reasoning_effort"] = reasoning_effort
+                      payload["chat_template_kwargs"] = kwargs
               
                   headers = {"Content-Type": "application/json"}
               
@@ -1840,12 +1843,12 @@ spec:
 
               echo "Finished: $(date -Iseconds)" | tee -a "${RUN_LOG}"
           env:
-            - { name: URL, value: "http://gpt-oss-vllm-frontend:8000" }
-            - { name: MODEL, value: "/mnt/models/hf/gpt-oss-120b" }
-            - { name: SERVED_MODEL_NAME, value: "openai/gpt-oss-120b" }
-            - { name: BENCHMARK_STACK, value: "gpt-oss-vllm" }
-            - { name: REASONING_EFFORT, value: "low" }
-            - { name: DISABLE_CONVERSATION_ID, value: "1" }
+            - { name: URL, value: "http://llm-bench-frontend:8000" }
+            - { name: MODEL, value: "/mnt/models/hf/DeepSeek-V4-Flash-Base" }
+            - { name: SERVED_MODEL_NAME, value: "deepseek-ai/DeepSeek-V4-Flash-Base" }
+            - { name: BENCHMARK_STACK, value: "dsv4-vllm-disagg-native" }
+            # REASONING_EFFORT: high|max → Think mode; unset → non-think (recipes default throughput)
+            - { name: DISABLE_CONVERSATION_ID, value: "0" }
             - { name: NUM_CLIENTS, value: "40" }
             - { name: MAX_ACTIVE_CONVERSATIONS, value: "40" }
             - { name: NUM_CONVERSATIONS, value: "40" }

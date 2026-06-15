@@ -8,7 +8,7 @@ metadata:
 apiVersion: nvidia.com/v1alpha1
 kind: DynamoGraphDeployment
 metadata:
-  name: gpt-oss-vllm
+  name: llm-bench
   namespace: ai-dept-serving
   labels:
     app.kubernetes.io/part-of: dynamo-disagg-vllm

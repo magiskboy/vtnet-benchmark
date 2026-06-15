@@ -6,3 +6,4 @@ Rules:
 - Không được tự ý thực thi các yaml bằng kubectl nếu người dùng chưa cho phép
 - Các yaml file viết ra phải ngắn gọn, đủ dùng, không dài dòng
 - Chỉ comment với các trường hợp ngoại lệ và phải ghi rõ nguồn tham khảo tại nơi cần comment
+- Endpoint benchmark cố định: `http://llm-bench-frontend:8000` (namespace `ai-dept-serving`). Dynamo: `metadata.name: llm-bench` + service key `frontend` → operator tạo Service `llm-bench-frontend` ([naming](https://github.com/ai-dynamo/dynamo/blob/main/deploy/operator/internal/dynamo/graph.go)). DeepSeek native: Service alias `llm-bench-frontend` trỏ router
