@@ -1,0 +1,55 @@
+{
+  "title": "gpt-oss-120b — TRT-LLM vs vLLM",
+  "configs": [
+    {
+      "label": "trt-agg-native",
+      "dir": "gpt-oss-120b/03062026-result/agg-trtllm-native-p95",
+      "backend": "TRT-LLM",
+      "serving": "Aggregated",
+      "kv": "Native"
+    },
+    {
+      "label": "trt-agg-kvbm",
+      "dir": "gpt-oss-120b/03062026-result/agg-trtllm-kvbm-p95",
+      "backend": "TRT-LLM",
+      "serving": "Aggregated",
+      "kv": "KVBM"
+    },
+    {
+      "label": "trt-disagg-native",
+      "dir": "gpt-oss-120b/03062026-result/disagg-trtllm-native",
+      "backend": "TRT-LLM",
+      "serving": "Disaggregated",
+      "kv": "Native"
+    },
+    {
+      "label": "trt-disagg-kvbm",
+      "dir": "gpt-oss-120b/03062026-result/disagg-trtllm-kvbm",
+      "backend": "TRT-LLM",
+      "serving": "Disaggregated",
+      "kv": "KVBM"
+    },
+    {
+      "label": "vllm-disagg-native",
+      "dir": "gpt-oss-120b/03062026-result/disagg-vllm-native",
+      "backend": "vLLM",
+      "serving": "Disaggregated",
+      "kv": "Native"
+    },
+    {
+      "label": "vllm-disagg-kvbm",
+      "dir": "gpt-oss-120b/03062026-result/disagg-vllm-kvbm",
+      "backend": "vLLM",
+      "serving": "Disaggregated",
+      "kv": "KVBM"
+    }
+  ],
+  "colors": {
+    "trt-agg-native": "#4C72B0",
+    "trt-agg-kvbm": "#55A868",
+    "trt-disagg-native": "#C44E52",
+    "trt-disagg-kvbm": "#8172B3",
+    "vllm-disagg-native": "#DD8452",
+    "vllm-disagg-kvbm": "#CCB974"
+  }
+}

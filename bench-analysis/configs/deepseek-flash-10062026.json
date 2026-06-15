@@ -1,0 +1,24 @@
+{
+    "title": "gpt-oss-120b — TRT-LLM vs vLLM",
+    "configs": [
+      {
+        "label": "deepseek-flash-fp4",
+        "dir": "deepseek-v4-flash/10062026-result/20260610T075958",
+        "backend": "vLLM",
+        "serving": "Disaggregated",
+        "kv": "Native"
+      },
+      {
+        "label": "deepseek-flash-base-fp8",
+        "dir": "deepseek-v4-flash/10062026-result/20260611T015457",
+        "backend": "vLLM",
+        "serving": "Disaggregated",
+        "kv": "Native"
+      }
+    ],
+    "colors": {
+      "deepseek-flash-fp4": "#4C72B0",
+      "deepseek-flash-base-fp8": "#55A868"
+    }
+  }
+  
