@@ -1,5 +1,5 @@
 {
-    "title": "gpt-oss-120b — TRT-LLM vs vLLM",
+    "title": "DeepSeek-V4-Flash - vLLM",
     "configs": [
       {
         "label": "deepseek-flash-fp4",
